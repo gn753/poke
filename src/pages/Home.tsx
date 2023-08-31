@@ -10,7 +10,7 @@ export default function Home() {
         <ul className="display: flex flex-wrap">
           {pokeList &&
             pokeList.results.map((card: any) => (
-              <PokeCard name={card.name} image={card.image} />
+              <PokeCard key={card.id}name={card.name} image={card.image} id={card.id}/>
             ))}
           <div>{isLoading && "로딩중입니다"}</div>
           <div ref={scrollEnd}></div>
