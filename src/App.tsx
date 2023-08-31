@@ -19,17 +19,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [list, setList] = useState<any>(null);
-  useEffect(() => {
-    const url = "https://pokeapi.co/api/v2/type/";
-    const fetchType = async () => {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data, "data");
-      setList(data.results);
-    };
-    fetchType();
-  }, []);
 
   return (
     <>

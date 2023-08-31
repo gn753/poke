@@ -1,13 +1,19 @@
 import PokeCard from "../components/PokeCard";
+import useFetchInfinityScroll from "../hooks/useFetchInfinityScroll";
 
 export default function Home() {
+  const { pokeList, scrollEnd, isLoading } = useFetchInfinityScroll();
+
   return (
     <main className="p-10">
       <div>
         <ul className="display: flex flex-wrap">
-          {Array.from(Array(10).keys()).map(() => (
-            <PokeCard />
-          ))}
+          {pokeList &&
+            pokeList.results.map((card: any) => (
+              <PokeCard name={card.name} image={card.image} />
+            ))}
+          <div>{isLoading && "로딩중입니다"}</div>
+          <div ref={scrollEnd}></div>
         </ul>
       </div>
     </main>
