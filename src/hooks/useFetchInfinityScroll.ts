@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-
+import { useRecoilState } from "recoil";
+import { pokeListState } from "../atoms/atoms";
 export interface IsPokeList {
   next: string;
   results: any;
@@ -11,26 +12,25 @@ interface IsPokeCard {
 
 const useFetchInfinityScroll = () => {
   const [pokeCount, setPokeCount] = useState(100);
-  const [pokeList, setPokeList] = useState<IsPokeList | null>(null);
+  const [pokeList, setPokeList] = useRecoilState<IsPokeList | null>(
+    pokeListState
+  );
   const [isLoading, setIsLoading] = useState(false);
   const scrollEnd = useRef<HTMLDivElement | null>(null);
 
   //포켓몬 호출
-  const fetchPoke = useCallback(
-    async () => {
-      const baseUrl = `https://pokeapi.co/api/v2/pokemon?limit=${pokeCount}`;
-      const response = await fetch(baseUrl);
-      const data = await response.json();
-      return data;
-    },
-    [pokeCount]
-  );
+  const fetchPoke = useCallback(async () => {
+    const baseUrl = `https://pokeapi.co/api/v2/pokemon?limit=${pokeCount}`;
+    const response = await fetch(baseUrl);
+    const data = await response.json();
+    return data;
+  }, [pokeCount]);
 
   // 포켓몬 한글 이름 호출
   const fetchkoreanNames = async (data: IsPokeList) => {
-    const urls: any = data?.results.map((item: IsPokeCard, index: number) => {
+    const urls: any = data?.results.map((_unused: any, index: number) => {
       return fetch(
-        ` https://pokeapi.co/api/v2/pokemon-species/${index + 1}`
+        `https://pokeapi.co/api/v2/pokemon-species/${index + 1}`
       ).then((res) => res.json());
     });
     const responses = await Promise.all(urls).then((res) =>
@@ -44,17 +44,16 @@ const useFetchInfinityScroll = () => {
         };
       })
     );
-  
+
     return responses;
   };
 
   const loadMore = () => {
     setPokeCount((prev) => prev + 9);
-  
   };
   useEffect(() => {
     const getPokes = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       const englishPokes = await fetchPoke();
       const koreanNames = await fetchkoreanNames(englishPokes);
 
@@ -62,13 +61,11 @@ const useFetchInfinityScroll = () => {
         next: englishPokes.next ? englishPokes.next : null,
         results: [...koreanNames],
       });
-      setIsLoading(false)
+      setIsLoading(false);
     };
 
     getPokes();
-  }, [pokeCount, fetchPoke]);
-
-
+  }, [fetchPoke, setPokeList]);
 
   useEffect(() => {
     if (!isLoading) {

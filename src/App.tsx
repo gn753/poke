@@ -1,30 +1,37 @@
-import { useState, useEffect } from "react";
-import PokeCard from "./components/PokeCard";
-import PokeTypes from "./components/PokeTypes";
-import PokeCardDetails from "./components/PokeCardDetails";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import PokeTopBar from "./components/PokeTopBar";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
+import { RecoilRoot } from "recoil";
+import PokeTypes from "./components/PokeTypes";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <>
+        <PokeTopBar />
+        <PokeTypes />
+        <Home />
+      </>
+    ),
   },
   {
-    path: "/details",
-    element: <Details />,
+    path: "/details/:id",
+    element: (
+      <>
+        <PokeTopBar />
+        <Details />
+      </>
+    ),
   },
 ]);
 
 function App() {
-
   return (
-    <>
-      <PokeTopBar />
+    <RecoilRoot>
       <RouterProvider router={router} />
-    </>
+    </RecoilRoot>
   );
 }
 

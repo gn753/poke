@@ -3,7 +3,7 @@ import useFetchInfinityScroll from "../hooks/useFetchInfinityScroll";
 
 export default function Home() {
   const { pokeList, scrollEnd, isLoading } = useFetchInfinityScroll();
-
+    
   return (
     <main className="p-10">
       <div>
