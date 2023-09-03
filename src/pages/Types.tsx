@@ -18,10 +18,12 @@ export default function Types() {
       const url = `https://pokeapi.co/api/v2/type/${id}`;
       const response = await fetch(url);
       const data = await response.json();
+
       //포켓몬 상세 url
       const pokemonDetailsUrls = await data.pokemon.map((it: any) =>
         fetch(it.pokemon.url)
       );
+
       // promise.all로 병렬 작업
       // 타입에서 url 뽑아 개별 포켓몬 api 로접근
       const pokemonDetails = await Promise.all(pokemonDetailsUrls).then((res) =>
@@ -36,10 +38,15 @@ export default function Types() {
         (종들) => Promise.all(종들.map((종) => 종.json()))
       );
 
+      //type url에서 포켓몬 id값만 url에서 출력해 전달
+      const pokemoDetailsUrlIdParams = await data.pokemon.map((it: any) => {
+        const urlParts = it.pokemon.url.split("/");
+        return urlParts[urlParts.length - 2];
+      });
       //각 데이터에 맞게 매칭
       const results = pokemonDetails.map((it, index) => {
         return {
-          id: index + 1,
+          id: pokemoDetailsUrlIdParams[index],
           name: pokemonSpecies[index].names[2].name,
           image: it.sprites.front_default,
           color: pokemonSpecies[index].color.name,
