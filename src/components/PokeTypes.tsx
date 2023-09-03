@@ -56,17 +56,20 @@ export default function PokeTypes() {
       <div className="lg:container mx-auto">
         <div className="flex flex-wrap gap-[15px]">
           {types.length > 0 &&
-            types.map((type) => (
-              <Link to={`/types/${type.urlParmas}`}>
-                <div
-                  className={`w-[100px] p-4 rounded mt-3 text-center cursor-pointer`}
-                  style={{ backgroundColor: `${colors[type.name]}` }}
-                  key={type.name}
-                >
-                  {type.name}
-                </div>
-              </Link>
-            ))}
+            types.map(
+              (type) =>
+                colors[type.name] && (
+                  <Link to={`/types/${type.urlParmas}`}>
+                    <div
+                      className={`w-[100px] p-4 rounded mt-3 text-center cursor-pointer`}
+                      style={{ backgroundColor: `${colors[type.name]}` }}
+                      key={type.name}
+                    >
+                      {type.name}
+                    </div>
+                  </Link>
+                )
+            )}
         </div>
       </div>
     </div>
