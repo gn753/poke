@@ -11,10 +11,6 @@ export default function PokeTopBar() {
                 포켓몬도감
               </h1>
             </Link>
-            <input
-              className="display: block m-auto w-4/5 h-10 p-6 bg-[#0e0e0e] text-white"
-              placeholder="포켓몬 이름 또는 설명, 특성 키워드를 입력해주세요."
-            />
           </div>
         </div>
       </div>

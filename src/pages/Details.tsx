@@ -1,15 +1,25 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+interface IsDetails {
+  name:string;
+  text:string;
+  color:string;
+  type:string;
+  image:string
+}
+
 export default function Details() {
   // 포켓몬 상세 데이터 : 종,타입,이미지, 칼라 
-  const [pokeDetails, setPokeDetails] = useState<any>(null);
+  const [pokeDetails, setPokeDetails] = useState<IsDetails | null>(null);
+  const [isLoading,setIsLoading] = useState(false)
   const params = useParams();
   const id = Number(params.id);
 
   useEffect(() => {
     //만약 데이터값에 상태가 없다면 호출
     const fetchPokeDetails = async () => {
+      setIsLoading(true)
       //id 값으로 포켓몬 상세 데이터 출력 
       const pokeDetailRes = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
       const pokeDeatailslData = await pokeDetailRes.json();
@@ -27,6 +37,7 @@ export default function Details() {
       };
 
       setPokeDetails(pokeDetailsData);
+      setIsLoading(false)
     };
     if (id) {
       fetchPokeDetails();
@@ -37,6 +48,7 @@ export default function Details() {
   return (
     <main>
       {/* 테일윈드 css는 다이나믹 값을 지원하지 않으므로 inline-style 사용 */}
+      <div>{isLoading && "로딩중입니다"}</div>
       <div
         className="container-xl"
         style={{ background: `${pokeDetails && pokeDetails.color}` }}

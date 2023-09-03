@@ -1,13 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { pokeListState } from "../atoms/atoms";
+
 export interface IsPokeList {
   next: string;
   results: any;
-}
-interface IsPokeCard {
-  name: string;
-  url: string;
 }
 
 const useFetchInfinityScroll = () => {

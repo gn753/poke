@@ -10,11 +10,13 @@ interface IsType {
 
 export default function Types() {
   const [pokes, setPokes] = useState<IsType[] | null>(null);
+  const [isLoading,setIsLoading] = useState(false)
   const params = useParams();
   const id = Number(params.urlParams);
 
   useEffect(() => {
     const fetchPokeTypes = async () => {
+      setIsLoading(true)
       const url = `https://pokeapi.co/api/v2/type/${id}`;
       const response = await fetch(url);
       const data = await response.json();
@@ -54,6 +56,7 @@ export default function Types() {
       });
 
       setPokes(results);
+      setIsLoading(false)
     };
     fetchPokeTypes();
   }, [id]);
@@ -72,6 +75,7 @@ export default function Types() {
               />
             ))}
         </ul>
+        <div>{isLoading && "로딩중입니다"}</div>
       </div>
     </main>
   );
