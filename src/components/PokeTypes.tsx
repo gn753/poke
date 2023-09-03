@@ -38,7 +38,7 @@ export default function PokeTypes() {
       const url = "https://pokeapi.co/api/v2/type/";
       const response = await fetch(url);
       const data = await response.json();
-      const filter = await data.results.map((it: any) => {
+      const results = await data.results.map((it: any) => {
         const urlParts = it.url.split("/");
         return {
           name: it.name,
@@ -46,18 +46,18 @@ export default function PokeTypes() {
         };
       });
 
-      setTypes(filter);
+      setTypes(results);
     };
     fetchPokeType();
   }, []);
-  console.log(types, "types");
+
   return (
     <div>
       <div className="lg:container mx-auto">
         <div className="flex flex-wrap gap-[15px]">
           {types.length > 0 &&
             types.map((type) => (
-              <Link to={`/type/${type.urlParmas}`}>
+              <Link to={`/types/${type.urlParmas}`}>
                 <div
                   className={`w-[100px] p-4 rounded mt-3 text-center cursor-pointer`}
                   style={{ backgroundColor: `${colors[type.name]}` }}

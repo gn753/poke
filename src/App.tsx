@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Details from "./pages/Details";
 import { RecoilRoot } from "recoil";
 import PokeTypes from "./components/PokeTypes";
+import Types from "./pages/Types";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,15 @@ const router = createBrowserRouter([
       <>
         <PokeTopBar />
         <Details />
+      </>
+    ),
+  },
+  {
+    path: "/types/:urlParams",
+    element: (
+      <>
+        <PokeTopBar />
+        <Types />
       </>
     ),
   },
