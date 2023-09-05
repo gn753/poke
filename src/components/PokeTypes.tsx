@@ -59,11 +59,10 @@ export default function PokeTypes() {
             types.map(
               (type) =>
                 colors[type.name] && (
-                  <Link to={`/types/${type.urlParmas}`}>
+                  <Link key={type.name} to={`/types/${type.urlParmas}`}>
                     <div
                       className={`w-[100px] p-4 rounded mt-3 text-center cursor-pointer`}
                       style={{ backgroundColor: `${colors[type.name]}` }}
-                      key={type.name}
                     >
                       {type.name}
                     </div>
