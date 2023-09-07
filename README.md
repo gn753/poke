@@ -1,31 +1,6 @@
-[배포링크] (https://64f4485535b5df7701d0e404--glittering-pavlova-450248.netlify.app/)
+<img width="1399" alt="메인페이지" src="https://github.com/gn753/poke/assets/71584114/b7bad3e0-dd33-4a63-8bc3-23640f258134">
 
-## 기능
-
-1. Pokemon API를 이용하여 리스트 만들기.
-2. 무한스크롤 구현
-3. router 를 이용한 Detail 페이지
-4. router를 활용한 Pokemon 타입별 출력.
-
-### Pokemon API
-
-프로젝트 초기에 공식문서를 파악하느라 오래 걸렸습니다. 처음API를 호출할때에는 이름과 url만 들어있어 url을  
-재호출해서 원하는 데이터를 찾기 위해 여러번 반복해야하는 구조였습니다. 때문에 데이터 구조를 어떻게 설계해야할지에 대해
-여러 고민과 시행반복이 어려웠던것 같습니다.
-
-### 무한스크롤 기능 구현
-
-API 문서 자체에 Data 를 호출시에 호출되는 데이터수의 limit 을 정할수 있었습니다.
-무한 스크롤 시 무한 콜을 제거하는게 가장 심혈을 기울였습니다.
-
-최하단에 Ref를 만났을때 useEffect 안에 담긴 Intersection Observer API 함수가 실행되고 함수가 실행될시에 새로운 데이터를 추가 해주는 방식을 사용하여 구현하였습니다.
-
-### Pokemon 타입별 출력.
-
-포켓몬을 타입별로 정리하였습니다. parma을 url에 전달해 해당 id를 받아 타입별로 포켓몬을 구현했습니다.
-초기 설계는 home에서 받은 전역 포켓몬 데이터로 recoil의 setter함수를 이용해 필터링을 하는 것을 고민했었습니다.  
- 하지만 새로고침을 했을 때 사용할 수 없다는 점, 무한스크롤이기 때문에 해당 포켓몬이 있는 page가 아직 없다면 해당 포켓몬이 나올 수 없다는 단점,  
- api 구조상의 문제점이 있어 현 구조를 선택했습니다.
+[배포링크] (https://main--lively-scone-f8b04e.netlify.app/)
 
 ## 커밋 규칙
 
@@ -38,6 +13,60 @@ API 문서 자체에 Data 를 호출시에 호출되는 데이터수의 limit �
 |  💄   |     Style      |   UI추가 및 업데이트    |
 |  ➕   |     Chore      | 패키지 추가 및 업데이트 |
 |  📝   |      Docs      |    리드미 문서 작성     |
+
+## 기능
+
+1. Pokemon API를 이용하여 리스트 만들기.
+2. 무한스크롤 구현
+3. router를 활용한 Pokemon 타입별 출력.
+
+### Pokemon API
+
+프로젝트 초기에 공식 문서를 이해하는 데 상당한 시간이 소요되었습니다. 초기 API 호출 시, 데이터에는 이름과 URL만이 제공되었기 때문에 원하는 정보를 얻기 위해 추가적인 API 호출이 필요했습니다.
+
+예를 들어, 포켓몬의 한글 이름을 얻거나 포켓몬의 특징 설명을 얻기 위해서는 각각 다른 API를 호출해야 했습니다.
+
+이러한 데이터 구조를 어떻게 설계해야 하는지 이해하기 위해 간단한 프로토타입을 만들고 API 구조를 이해하기 위해 여러 실험을 진행하면서 문제를 해결하였습니다.
+
+### 무한스크롤 기능 구현
+
+![무한스크롤](https://github.com/gn753/poke/assets/71584114/ebc18e1a-edab-4820-b37d-f26413a93447)
+API 문서 자체에 데이터 호출 시 limit와 offset을 지정할 수 있는 기능이 있었습니다. 무한 스크롤 구현 중, 가장 큰 과제는 무한 호출과 중복 호출을 효과적으로 처리하는 것이었습니다. 최대한 피할 수 있는 의존성은 제거하되 피할 수 없는 의존성으로 인해 생기는 문제는 호출 조건을 꼼꼼히 작성해 무한 콜과 중복 호출을 개선했습니다.
+
+무한 스크롤은 페이지 하단에 도달할 때마다 Ref를 감지하여 useEffect 내부에 정의된 Intersection Observer API 함수를 실행하는 것입니다. 이 함수가 실행될 때 새로운 데이터를 불러와 리스트에 추가하는 방식으로 구현하였습니다.
+
+### Pokemon 타입별 출력.
+
+![포켓몬 타입 검색](https://github.com/gn753/poke/assets/71584114/8c750a62-7d7d-4a4d-912f-00b20ca71303)
+포켓몬을 타입별로 정리하였습니다. URL에 전달된 파라미터를 사용하여 해당 타입의 ID를 추출하고, 이를 이용하여 API를 호출하여 해당 타입의 포켓몬을 불러옵니다. 초기 설계 단계에서는 홈 화면에서 전역 포켓몬 데이터를 사용하여 Recoil의 setter 함수를 이용하여 필터링하는 방법을 고려했습니다.
+
+그러나 새로고침 시에 사용할 수 없으며, 무한 스크롤 구현 때문에 해당 포켓몬 데이터가 아직 로드되지 않았을 경우 해당 포켓몬이 표시되지 않는 문제가 있었습니다. 이러한 단점을 고려하여 이 접근 방식을 적용하지 않기로 결정했습니다.
+
+또한, 타입별 포켓몬은 한 번에 불러왔습니다. 각 타입별 포켓몬 수가 100개 미만이기 때문에 사용자 경험 측면에서 이 접근 방식이 더 적합하다고 판단했습니다.
+
+## 기술
+
+### React
+
+### TailwindCss
+
+#### 선택한 이유
+
+이전 프로젝트 까지는 Emotion 라이브러리를 사용하여 스타일링을 진행해왔습니다. 그러나 이번 프로젝트에서는 스타일링 시간을 줄일 수 있는 테일윈드 CSS를 공부 할 기회를 가지고 싶었습니다.
+
+#### 장점
+
+클래스나 스타일드 컴포넌트 작성 할 필요없이 바로 클래스명에 작성한다는 점은 테일윈드 CSS 규칙만 적응만 된다면 빠른 개발 속도를 가질 수 있어 굉장히 매력인 포인트였다고 생각합니다.
+
+둘째는 성능적으로 유리합니다. 테일윈드 CSS는 빌드 프로세스시 사용되고 있는 CSS만 정적으로 추출하므로 사용되지 않아 방치되고 있는 CSS를 제거하기 때문에 CSS 사이즈를 컴팩트하게 줄일 수 있어 성능적으로 유리한 면이 있습니다.
+
+#### 단점
+
+다만 단점으로는 먼저, Tailwind CSS만의 고유한 CSS 단축 명칭을 익히는 데 적응하는데 시간이 소요됩니다.
+
+둘째 나쁜 코드 가독성과 네이밍 컨벤션의 부재로 인해 클래스내에 작성하는 CSS 자체로는 해당 요소의 역할을 명확히 이해하기 어렵다는 점이 있습니다.이로 인해 다른 개발자들과 협업 시 코드 구조 파악에 어려움을 겪을 확률이 높을 것 같습니다.
+
+셋째는 모든 width값이 rem으로 이루어진점. 스타일 시 동적값이 지원이 되지 않아 인라인스타일로 작성 해야한다는 점이었습니다.
 
 ## 문제
 
@@ -54,7 +83,7 @@ API 문서 자체에 Data 를 호출시에 호출되는 데이터수의 limit �
 
 #### 원인
 
-- 테일윈드 css는 완전한 문자열로 작성된 클래스명만 탐색함. 즉 동적 지원을 적용하지 않아 감지가 불가능했던것.
+- Tailwind css는 완전한 문자열로 작성된 클래스명만 탐색함.
 - Tailwind에는 어떤 종류의 클라이언트 측 런타임도 포함되지 않으므로 클래스 이름은 빌드 시 정적으로 추출 가능해야 하며 클라이언트에서 변경되는 모든 종류의 임의의 동적 값에 의존할 수 없다고 나와있다. 즉 클라이언트에 변경되는 모든 것들은 탐지가 불가능
 
 #### 해결
@@ -62,61 +91,5 @@ API 문서 자체에 Data 를 호출시에 호출되는 데이터수의 limit �
 - 위와 같은 테일윈드 css 작동방식상 동적 값에 의존한다면 공식문서에서는 인라인 스타일을 권장.
 
 ```tsx
-import { useEffect, useState } from "react";
-const colors: any = {
-  normal: "#A8A77A",
-  fire: "#EE8130",
-  water: "#6390F0",
-  electric: "#F7D02C",
-  grass: "#7AC74C",
-  ice: "#96D9D6",
-  fighting: "#C22E28",
-  poison: "#A33EA1",
-  ground: "#E2BF65",
-  flying: "#A98FF3",
-  psychic: "#F95587",
-  bug: "#A6B91A",
-  rock: "#B6A136",
-  ghost: "#735797",
-  dragon: "#6F35FC",
-  dark: "#705746",
-  steel: "#B7B7CE",
-  fairy: "#D685AD",
-};
-interface IsPokeType {
-  name: string;
-  url: string;
-}
-
-export default function PokeTypes() {
-  const [types, setTypes] = useState<IsPokeType[] | []>([]);
-  const [color, setColor] = useState(colors);
-
-  useEffect(() => {
-    const fetchPokeType = async () => {
-      const url = "https://pokeapi.co/api/v2/type/";
-      const response = await fetch(url);
-      const data = await response.json();
-      const results = await data.results;
-      setTypes(results);
-    };
-    fetchPokeType();
-  }, []);
-
-  return (
-    <div>
-      {types.length > 0 &&
-        types.map((type) => (
-          <div
-            className={`mt-3 border-2 border-solid border-black bg-${
-              color[type.name]
-            } `}
-            key={type.name}
-          >
-            {type.name} {colors[type.name]}
-          </div>
-        ))}
-    </div>
-  );
-}
+ className={`bg-${color[type.name]} `}
 ```
