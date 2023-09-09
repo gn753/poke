@@ -2,20 +2,22 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { pokeListState } from "../atoms/atoms";
 
-export interface IsPokeList {
-  next: string;
+export interface IsFetchPoke {
+  next: any;
   results: any;
+}
+
+export interface IsPoke {
+  name: string;
+  id: string;
+  image: string;
 }
 
 const useFetchInfinityScroll = () => {
   //포켓몬 리스트 api 시작 넘버
   const [pokeCount, setPokeCount] = useState(0);
   //포켓몬 목록
-  const [pokeList, setPokeList] = useRecoilState<IsPokeList | null>(
-    pokeListState
-  );
-  // 무한스크롤 fetching 여부 판별
-  const [hasNext, setHasNext] = useState(true);
+  const [pokeList, setPokeList] = useRecoilState<any>(pokeListState);
   const [isLoading, setIsLoading] = useState(false);
   const scrollEnd = useRef<HTMLDivElement | null>(null);
 
@@ -28,7 +30,7 @@ const useFetchInfinityScroll = () => {
   }, [pokeCount]);
 
   // 포켓몬 한글 이름 호출
-  const fetchkoreanNames = async (data: IsPokeList) => {
+  const fetchkoreanNames = async (data: IsFetchPoke) => {
     // url에서 id 값 추출
     const urlParts = data.results.map((part: any) => {
       const urlSplit = part.url.split("/");
@@ -42,8 +44,8 @@ const useFetchInfinityScroll = () => {
       ).then((res) => res.json());
     });
 
-    //대량의 요청으로 빠른 사용자 경험을 위해 Promise.all로 병렬 처리
-    const responses = await Promise.all(urls).then((res) =>
+    //대량의 요청은 Promise.all로 병렬 처리
+    const responses: IsPoke[] = await Promise.all(urls).then((res) =>
       res.map((it: any, index: number) => {
         return {
           name: it.names[2].name,
@@ -56,7 +58,7 @@ const useFetchInfinityScroll = () => {
   };
 
   const getPokes = useCallback(async () => {
-    if (isLoading || !hasNext) {
+    if (isLoading) {
       return;
     }
 
@@ -64,24 +66,13 @@ const useFetchInfinityScroll = () => {
     const englishPokes = await fetchPoke();
     const koreanNames = await fetchkoreanNames(englishPokes);
 
-    const isNextUrl = englishPokes?.next;
-
-    if (!isNextUrl) {
-      setIsLoading(false);
-      setHasNext(false);
-      return;
-    }
-
-    setPokeList((pre) => {
-      return {
-        next: isNextUrl ? isNextUrl : null,
-        results: pre ? [...pre?.results, ...koreanNames] : [...koreanNames],
-      };
-    });
+    setPokeList((pre: IsPoke[] | []) =>
+      pre.length > 0 ? [...pre, ...koreanNames] : [...koreanNames]
+    );
     // 다음 페이지 추가
-    setPokeCount((pre) => pre + 50);
+    setPokeCount((pre: any) => pre + 50);
     setIsLoading(false);
-  }, [fetchPoke, hasNext, isLoading, setPokeList]);
+  }, [fetchPoke, isLoading, setPokeList]);
 
   useEffect(() => {
     const options = {
@@ -102,6 +93,10 @@ const useFetchInfinityScroll = () => {
 
     if (scrollEnd.current) {
       observer.observe(scrollEnd.current);
+      // 포켓몬 id값이 1000번을 넘어가면 무한스크롤 종료.
+      if (pokeCount === 1000) {
+        observer.unobserve(scrollEnd.current);
+      }
     }
 
     return () => {
@@ -109,7 +104,7 @@ const useFetchInfinityScroll = () => {
         observer.unobserve(scrollEnd.current);
       }
     };
-  }, [getPokes, isLoading]);
+  }, [getPokes, isLoading, pokeCount]);
 
   return { isLoading, pokeList, scrollEnd };
 };
