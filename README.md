@@ -2,17 +2,12 @@
 
 [배포링크] (https://main--lively-scone-f8b04e.netlify.app/)
 
-## 커밋 규칙
+## 실행방법
 
-| emoji | Commit message |           use           |
-| :---: | :------------: | :---------------------: |
-|  🚀   |     Start      |     프로젝트 스타트     |
-|  ✨   |      Feat      |    새로운 기능 추가     |
-|  🐛   |      Fix       |        버그 수정        |
-|  🔧   |    Refactor    |      코드 리펙토링      |
-|  💄   |     Style      |   UI추가 및 업데이트    |
-|  ➕   |     Chore      | 패키지 추가 및 업데이트 |
-|  📝   |      Docs      |    리드미 문서 작성     |
+```
+npm install // 설치
+npm start  // 실행
+```
 
 ## 기능
 
@@ -93,3 +88,15 @@ API 문서 자체에 데이터 호출 시 limit와 offset을 지정할 수 있�
 ```tsx
  className={`bg-${color[type.name]} `}
 ```
+
+## 커밋 규칙
+
+| emoji | Commit message |           use           |
+| :---: | :------------: | :---------------------: |
+|  🚀   |     Start      |     프로젝트 스타트     |
+|  ✨   |      Feat      |    새로운 기능 추가     |
+|  🐛   |      Fix       |        버그 수정        |
+|  🔧   |    Refactor    |      코드 리펙토링      |
+|  💄   |     Style      |   UI추가 및 업데이트    |
+|  ➕   |     Chore      | 패키지 추가 및 업데이트 |
+|  📝   |      Docs      |    리드미 문서 작성     |
