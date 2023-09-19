@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { pokeListState } from "../atoms/atoms";
+import { pokeListCount, pokeListState } from "../atoms/atoms";
 
 export interface IsFetchPoke {
   next: any;
@@ -15,7 +15,7 @@ export interface IsPoke {
 
 const useFetchInfinityScroll = () => {
   //포켓몬 리스트 api 시작 넘버
-  const [pokeCount, setPokeCount] = useState(0);
+  const [pokeCount, setPokeCount] = useRecoilState(pokeListCount);
   //포켓몬 목록
   const [pokeList, setPokeList] = useRecoilState<any>(pokeListState);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +72,7 @@ const useFetchInfinityScroll = () => {
     // 다음 페이지 추가
     setPokeCount((pre: any) => pre + 50);
     setIsLoading(false);
-  }, [fetchPoke, isLoading, setPokeList]);
+  }, [fetchPoke, isLoading, setPokeCount, setPokeList]);
 
   useEffect(() => {
     const options = {
