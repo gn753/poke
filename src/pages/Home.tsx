@@ -1,15 +1,15 @@
 import PokeCard from "../components/PokeCard";
-import useFetchInfinityScroll from "../hooks/useFetchInfinityScroll";
+import useFetctPokeList from "../hooks/useFetctPokeList";
 import useReactWindowScroll from "../hooks/useReactWindowScroll";
 import { FixedSizeList as List } from "react-window";
 
 const itemCount = 1000 / 5; // 아이템 개수
 const itemsPerRow = 5; // 한 행당 아이템 개수
-const itemWidth = "20%" // 아이템 가로 너비
+const itemWidth = "20%"; // 아이템 가로 너비
 const itemHeight = 180; // 아이템 세로 높이
 
 export default function Home() {
-  const { pokeList } = useFetchInfinityScroll();
+  const { pokeList } = useFetctPokeList();
   const { ref, outerRef, innerRef } = useReactWindowScroll({ items: pokeList });
 
   const Row = ({ index, style }: any) => {

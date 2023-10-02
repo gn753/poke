@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { pokeListCount, pokeListState } from "../atoms/atoms";
+import { pokeListState } from "../atoms/atoms";
 
 export interface IsFetchPoke {
   next: any;
@@ -13,10 +13,8 @@ export interface IsPoke {
   image: string;
 }
 
-const useFetchInfinityScroll = () => {
+const useFetctPokeList = () => {
   //포켓몬 리스트 api 시작 넘버
-  const [pokeCount, setPokeCount] = useRecoilState(pokeListCount);
-  //포켓몬 목록
   const [pokeList, setPokeList] = useRecoilState<any>(pokeListState);
   const [isLoading, setIsLoading] = useState(false);
   const scrollEnd = useRef<HTMLDivElement | null>(null);
@@ -65,42 +63,9 @@ const useFetchInfinityScroll = () => {
     setPokeList((pre: IsPoke[] | []) =>
       pre.length > 0 ? [...pre, ...koreanNames] : [...koreanNames]
     );
-    // 다음 페이지 추가
 
     setIsLoading(false);
   }, [fetchPoke, setPokeList]);
-
-  // useEffect(() => {
-  //   const options = {
-  //     root: null, // 기본값: viewport
-  //     rootMargin: "0px",
-  //     threshold: 0.2, // 요소가 20% 이상 들어왔을 때 콜백 함수 호출
-  //   };
-
-  //   const handleIntersection = (entries: any[]) => {
-  //     //스크롤 밑 감지
-  //     const entry = entries[0];
-  //     if (entry.isIntersecting) {
-  //       getPokes();
-  //     }
-  //   };
-
-  //   const observer = new IntersectionObserver(handleIntersection, options);
-
-  //   if (scrollEnd.current) {
-  //     observer.observe(scrollEnd.current);
-  //     // 포켓몬 id값이 1000번을 넘어가면 무한스크롤 종료.
-  //     if (pokeCount === 1000) {
-  //       observer.unobserve(scrollEnd.current);
-  //     }
-  //   }
-
-  //   return () => {
-  //     if (scrollEnd.current) {
-  //       observer.unobserve(scrollEnd.current);
-  //     }
-  //   };
-  // }, [getPokes, isLoading, pokeCount]);
 
   useEffect(() => {
     getPokes();
@@ -109,4 +74,4 @@ const useFetchInfinityScroll = () => {
   return { isLoading, pokeList, scrollEnd };
 };
 
-export default useFetchInfinityScroll;
+export default useFetctPokeList;
