@@ -8,7 +8,7 @@ interface IsPokeCard {
 
 export default function PokeCard({ name, image, id }: IsPokeCard) {
   return (
-    <li className="w-1/5 border transition-[0.5s] p-5 rounded-[10px] border-solid border-[#e8e8e8] cursor-pointer">
+    <div className="w-full h-full border transition-[0.5s] rounded-[10px] border-solid border-[#e8e8e8] cursor-pointer">
       <Link to={`/details/${id}`}>
         <figure className="relative">
           <img className="max-w-full h-auto" src={image} alt="" />
@@ -16,6 +16,6 @@ export default function PokeCard({ name, image, id }: IsPokeCard) {
         <p>No.{id}</p>
         <p className="text-lg font-bold">{name}</p>
       </Link>
-    </li>
+    </div>
   );
 }

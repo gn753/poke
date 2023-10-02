@@ -23,11 +23,11 @@ const useFetchInfinityScroll = () => {
 
   //포켓몬 호출
   const fetchPoke = useCallback(async () => {
-    const baseUrl = `https://pokeapi.co/api/v2/pokemon?limit=50&offset=${pokeCount}`;
+    const baseUrl = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`;
     const response = await fetch(baseUrl);
     const data = await response.json();
     return data;
-  }, [pokeCount]);
+  }, []);
 
   // 포켓몬 한글 이름 호출
   const fetchkoreanNames = async (data: IsFetchPoke) => {
@@ -58,10 +58,6 @@ const useFetchInfinityScroll = () => {
   };
 
   const getPokes = useCallback(async () => {
-    if (isLoading) {
-      return;
-    }
-
     setIsLoading(true);
     const englishPokes = await fetchPoke();
     const koreanNames = await fetchkoreanNames(englishPokes);
@@ -70,41 +66,45 @@ const useFetchInfinityScroll = () => {
       pre.length > 0 ? [...pre, ...koreanNames] : [...koreanNames]
     );
     // 다음 페이지 추가
-    setPokeCount((pre: any) => pre + 50);
+
     setIsLoading(false);
-  }, [fetchPoke, isLoading, setPokeCount, setPokeList]);
+  }, [fetchPoke, setPokeList]);
+
+  // useEffect(() => {
+  //   const options = {
+  //     root: null, // 기본값: viewport
+  //     rootMargin: "0px",
+  //     threshold: 0.2, // 요소가 20% 이상 들어왔을 때 콜백 함수 호출
+  //   };
+
+  //   const handleIntersection = (entries: any[]) => {
+  //     //스크롤 밑 감지
+  //     const entry = entries[0];
+  //     if (entry.isIntersecting) {
+  //       getPokes();
+  //     }
+  //   };
+
+  //   const observer = new IntersectionObserver(handleIntersection, options);
+
+  //   if (scrollEnd.current) {
+  //     observer.observe(scrollEnd.current);
+  //     // 포켓몬 id값이 1000번을 넘어가면 무한스크롤 종료.
+  //     if (pokeCount === 1000) {
+  //       observer.unobserve(scrollEnd.current);
+  //     }
+  //   }
+
+  //   return () => {
+  //     if (scrollEnd.current) {
+  //       observer.unobserve(scrollEnd.current);
+  //     }
+  //   };
+  // }, [getPokes, isLoading, pokeCount]);
 
   useEffect(() => {
-    const options = {
-      root: null, // 기본값: viewport
-      rootMargin: "0px",
-      threshold: 0.2, // 요소가 20% 이상 들어왔을 때 콜백 함수 호출
-    };
-
-    const handleIntersection = (entries: any[]) => {
-      //스크롤 밑 감지
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        getPokes();
-      }
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, options);
-
-    if (scrollEnd.current) {
-      observer.observe(scrollEnd.current);
-      // 포켓몬 id값이 1000번을 넘어가면 무한스크롤 종료.
-      if (pokeCount === 1000) {
-        observer.unobserve(scrollEnd.current);
-      }
-    }
-
-    return () => {
-      if (scrollEnd.current) {
-        observer.unobserve(scrollEnd.current);
-      }
-    };
-  }, [getPokes, isLoading, pokeCount]);
+    getPokes();
+  }, [getPokes]);
 
   return { isLoading, pokeList, scrollEnd };
 };
