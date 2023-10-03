@@ -19,7 +19,8 @@ export default function Home() {
           {Array.from({ length: itemsPerRow }, (_, i) => (
             <div
               key={index * itemsPerRow + i}
-              style={{ width: itemWidth, height: itemHeight }}
+              style={{ width: itemWidth }}
+              className="h-full"
             >
               {pokeList[index * itemsPerRow + i] && (
                 <PokeCard
