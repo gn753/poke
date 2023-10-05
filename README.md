@@ -2,7 +2,7 @@
 
 [배포링크] (https://main--lively-scone-f8b04e.netlify.app/)
 
-## [개발 배경](../../wiki/My-Wiki-개발히스토리)
+## [개발 배경](../../wiki/개발-히스토리)
 
 ## 주요기능
 
@@ -14,14 +14,13 @@
 
 이러한 데이터 구조를 어떻게 설계해야 하는지 이해하기 위해 간단한 프로토타입을 만들고 API 구조를 이해하기 위해 여러 실험을 진행하면서 문제를 해결하였습니다.
 
-### 무한스크롤 기능 구현 
+### 무한스크롤 기능 구현
 
 ![무한스크롤](https://github.com/gn753/poke/assets/71584114/ebc18e1a-edab-4820-b37d-f26413a93447)
 
 ### 무한 스크롤 => 가상 리스트 변경 1.1.0 ver update
 
 <img width="814" alt="스크린샷 2023-10-05 오후 3 13 21" src="https://github.com/gn753/poke/assets/71584114/6f96dd3e-19f8-4c9f-b632-7a0cdb9f399f">
-
 
 ### Pokemon 타입별 출력.
 
@@ -37,7 +36,6 @@
 - Typescript
 - TailwindCss
 - Recoil
-
 
 ## 커밋 규칙
 
