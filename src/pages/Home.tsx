@@ -10,7 +10,7 @@ const itemHeight = 180; // 아이템 세로 높이
 
 export default function Home() {
   const { pokeList } = useFetctPokeList();
-  const { ref, outerRef, innerRef } = useReactWindowScroll({ items: pokeList });
+  const { ref, outerRef, innerRef } = useReactWindowScroll();
 
   const Row = ({ index, style }: any) => {
     return (

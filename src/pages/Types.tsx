@@ -10,13 +10,13 @@ interface IsType {
 
 export default function Types() {
   const [pokes, setPokes] = useState<IsType[] | null>(null);
-  const [isLoading,setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const id = Number(params.urlParams);
 
   useEffect(() => {
     const fetchPokeTypes = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       const url = `https://pokeapi.co/api/v2/type/${id}`;
       const response = await fetch(url);
       const data = await response.json();
@@ -56,7 +56,7 @@ export default function Types() {
       });
 
       setPokes(results);
-      setIsLoading(false)
+      setIsLoading(false);
     };
     fetchPokeTypes();
   }, [id]);
@@ -64,17 +64,22 @@ export default function Types() {
   return (
     <main className="p-10">
       <div>
-        <ul className="display: flex flex-wrap">
+        <div className="display: flex flex-wrap">
           {pokes &&
-            pokes.map((poke: any) => (
-              <PokeCard
-                key={poke.name}
-                id={poke.id}
-                image={poke.image}
-                name={poke.name}
-              />
-            ))}
-        </ul>
+            pokes.map(
+              (poke: any) =>
+                poke.id < 10000 && (
+                  <div className="w-1/5">
+                    <PokeCard
+                      key={poke.name}
+                      id={poke.id}
+                      image={poke.image}
+                      name={poke.name}
+                    />
+                  </div>
+                )
+            )}
+        </div>
         <div>{isLoading && "로딩중입니다"}</div>
       </div>
     </main>

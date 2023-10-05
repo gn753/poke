@@ -13,7 +13,7 @@ export default function PokeCard({ name, image, id }: IsPokeCard) {
         <figure className="text-center">
           <img className="inline-block max-w-full h-auto" src={image} alt="" />
         </figure>
-        <p>No.{id}</p>
+        <p>No. {String(id).padStart(4, "0")}</p>
         <p className="text-lg font-bold">{name}</p>
       </Link>
     </div>
