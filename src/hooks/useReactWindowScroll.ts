@@ -33,7 +33,7 @@ export default function useReactWindowScroll() {
 
         ref.current.scrollTo(scrollOffset);
       }
-    }, 10);
+    }, 40);
 
     handleWindowScroll();
     window.addEventListener("scroll", handleWindowScroll);
