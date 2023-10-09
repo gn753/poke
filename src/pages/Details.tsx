@@ -72,10 +72,10 @@ export default function Details() {
   }, [id]);
 
   return (
-    <main className="p-10">
+    <main className="max-w-screen-md mx-auto">
       {/* 테일윈드 css는 다이나믹 값을 지원하지 않으므로 inline-style 사용 */}
       <div>{isLoading && "로딩중입니다"}</div>
-      <div className="container-xl">
+      <div>
         <div>
           <div className="flex justify-center p-10 gap-4 border border-solid">
             <div style={{ background: `${pokeDetails && pokeDetails.color}` }}>

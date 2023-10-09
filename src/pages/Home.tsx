@@ -12,10 +12,12 @@ export default function Home() {
   const { pokeList } = useFetctPokeList();
   const { ref, outerRef, innerRef } = useReactWindowScroll();
 
-  const Row = ({ index, style }: any) => {
+  const Row = ({ index, style, isScrolling }: any) => {
     return (
       <>
-        <div style={{ ...style, display: "flex", height: itemHeight }}>
+        <div
+          style={{ ...style, display: "flex", gap: "10px", height: itemHeight }}
+        >
           {Array.from({ length: itemsPerRow }, (_, i) => (
             <div
               key={index * itemsPerRow + i}
@@ -37,7 +39,7 @@ export default function Home() {
   };
 
   return (
-    <main className="p-10">
+    <main className="max-w-screen-md mx-auto">
       <List
         className="List"
         outerRef={outerRef}
@@ -47,7 +49,7 @@ export default function Home() {
         height={window.innerHeight}
         itemCount={itemCount}
         itemSize={itemHeight}
-        useIsScrolling
+        useIsScrolling={true}
         style={{
           display: "inline-block",
           width: "100%",
