@@ -20,12 +20,15 @@ const useFetctPokeList = () => {
   const scrollEnd = useRef<HTMLDivElement | null>(null);
 
   //포켓몬 호출
-  const fetchPoke = useCallback(async () => {
-    const baseUrl = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`;
-    const response = await fetch(baseUrl);
-    const data = await response.json();
-    return data;
-  }, []);
+  const fetchPoke = useCallback(
+    async (offset: number = 1, limit: number = 100) => {
+      const baseUrl = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+      const response = await fetch(baseUrl);
+      const data = await response.json();
+      return data;
+    },
+    []
+  );
 
   // 포켓몬 한글 이름 호출
   const fetchkoreanNames = async (data: IsFetchPoke) => {
@@ -55,7 +58,7 @@ const useFetctPokeList = () => {
     return responses;
   };
 
-  const getPokes = useCallback(async () => {
+  const getFirstPokes = useCallback(async () => {
     setIsLoading(true);
     const englishPokes = await fetchPoke();
     const koreanNames = await fetchkoreanNames(englishPokes);
@@ -67,9 +70,21 @@ const useFetctPokeList = () => {
     setIsLoading(false);
   }, [fetchPoke, setPokeList]);
 
+  const getPokesLazyLoaded = useCallback(async () => {
+    setIsLoading(true);
+    const englishPokes = await fetchPoke(100, 900);
+    const koreanNames = await fetchkoreanNames(englishPokes);
+
+    setPokeList((pre: IsPoke[] | []) =>
+      pre.length > 0 ? [...pre, ...koreanNames] : [...koreanNames]
+    );
+
+    setIsLoading(false);
+  }, [fetchPoke, setPokeList]);
+
   useEffect(() => {
-    getPokes();
-  }, [getPokes]);
+    getFirstPokes().then(getPokesLazyLoaded);
+  }, [getFirstPokes, getPokesLazyLoaded]);
 
   return { isLoading, pokeList, scrollEnd };
 };
