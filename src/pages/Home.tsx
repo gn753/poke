@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PokeCard from "../components/PokeCard";
 import useFetctPokeList from "../hooks/useFetctPokeList";
 import useReactWindowScroll from "../hooks/useReactWindowScroll";
@@ -10,13 +11,20 @@ const itemHeight = 180; // 아이템 세로 높이
 
 export default function Home() {
   const { pokeList } = useFetctPokeList();
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [scrollTimeoutId, setScrollTimeoutId] = useState<any>(null);
   const { ref, outerRef, innerRef } = useReactWindowScroll();
 
-  const Row = ({ index, style, isScrolling }: any) => {
+  const Row = ({ index, style }: any) => {
     return (
       <>
         <div
-          style={{ ...style, display: "flex", gap: "10px", height: itemHeight }}
+          style={{
+            ...style,
+            display: "flex",
+            gap: "10px",
+            height: itemHeight,
+          }}
         >
           {Array.from({ length: itemsPerRow }, (_, i) => (
             <div
@@ -38,6 +46,21 @@ export default function Home() {
     );
   };
 
+  const handleScroll = () => {
+    setIsScrolling(true);
+
+    // 이전 타임아웃 취소
+    if (scrollTimeoutId) {
+      clearTimeout(scrollTimeoutId);
+    }
+
+    // 새로운 타임아웃 설정
+    const newTimeoutId = setTimeout(() => {
+      setIsScrolling(false);
+    }, 1000); // 원하는 시간(밀리초)만큼 스크롤이 멈춰야 스켈레톤 UI가 표시됩니다.
+    setScrollTimeoutId(newTimeoutId);
+  };
+
   return (
     <main className="max-w-screen-md mx-auto">
       <List
@@ -49,14 +72,25 @@ export default function Home() {
         height={window.innerHeight}
         itemCount={itemCount}
         itemSize={itemHeight}
-        useIsScrolling={true}
+        onScroll={handleScroll}
         style={{
           display: "inline-block",
           width: "100%",
           height: "100%",
         }}
       >
-        {Row}
+        {({ index, style }) =>
+          isScrolling ? (
+            <div
+              className={index % 2 ? "ListItemOdd" : "ListItemEven"}
+              style={style}
+            >
+              스크롤
+            </div>
+          ) : (
+            <Row index={index} style={style} />
+          )
+        }
       </List>
     </main>
   );
