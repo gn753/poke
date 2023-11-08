@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PokeCard from "../components/PokeCard";
 import useFetctPokeList from "../hooks/useFetctPokeList";
 import useReactWindowScroll from "../hooks/useReactWindowScroll";
