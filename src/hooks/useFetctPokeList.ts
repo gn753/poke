@@ -17,17 +17,17 @@ const useFetctPokeList = () => {
   //포켓몬 리스트 api 시작 넘버
   const [pokeList, setPokeList] = useRecoilState<any>(pokeListState);
   const [isLoading, setIsLoading] = useState(false);
-  const scrollEnd = useRef<HTMLDivElement | null>(null);
+  const [count, setCount] = useState(1);
 
   //포켓몬 호출
   const fetchPoke = useCallback(
     async (offset: number = 1, limit: number = 100) => {
-      const baseUrl = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+      const baseUrl = `https://pokeapi.co/api/v2/pokemon?offset=${count}&limit=${limit}`;
       const response = await fetch(baseUrl);
       const data = await response.json();
       return data;
     },
-    []
+    [count]
   );
 
   // 포켓몬 한글 이름 호출
@@ -58,7 +58,7 @@ const useFetctPokeList = () => {
     return responses;
   };
 
-  const getFirstPokes = useCallback(async () => {
+  const getPokes = useCallback(async () => {
     setIsLoading(true);
     const englishPokes = await fetchPoke();
     const koreanNames = await fetchkoreanNames(englishPokes);
@@ -66,27 +66,11 @@ const useFetctPokeList = () => {
     setPokeList((pre: IsPoke[] | []) =>
       pre.length > 0 ? [...pre, ...koreanNames] : [...koreanNames]
     );
-
+    setCount((pre) => pre + 100);
     setIsLoading(false);
   }, [fetchPoke, setPokeList]);
 
-  const getPokesLazyLoaded = useCallback(async () => {
-    setIsLoading(true);
-    const englishPokes = await fetchPoke(100, 900);
-    const koreanNames = await fetchkoreanNames(englishPokes);
-
-    setPokeList((pre: IsPoke[] | []) =>
-      pre.length > 0 ? [...pre, ...koreanNames] : [...koreanNames]
-    );
-
-    setIsLoading(false);
-  }, [fetchPoke, setPokeList]);
-
-  useEffect(() => {
-    getFirstPokes().then(getPokesLazyLoaded);
-  }, [getFirstPokes, getPokesLazyLoaded]);
-
-  return { isLoading, pokeList, scrollEnd };
+  return { isLoading, pokeList, count, getPokes };
 };
 
 export default useFetctPokeList;
