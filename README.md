@@ -46,16 +46,16 @@
 
 ### 무한스크롤 기능 구현
 #### 구현 이미지
-![무한스크롤](https://github.com/gn753/poke/assets/71584114/ebc18e1a-edab-4820-b37d-f26413a93447)
+<img src="https://github.com/gn753/poke/assets/71584114/ebc18e1a-edab-4820-b37d-f26413a93447"  width="500" height="400"/>
 
 
 ### Pokemon 타입별 출력.
-
-![타입](https://user-images.githubusercontent.com/71584114/272788279-037f9a42-b53f-4595-b79a-eba05936eade.png)
+<img src="https://user-images.githubusercontent.com/71584114/272788279-037f9a42-b53f-4595-b79a-eba05936eade.png"  width="500" height="200"/>
 
 ## 포켓몬 상세정보
+<img src="https://user-images.githubusercontent.com/71584114/272788619-ff2863d2-a6af-47ae-a010-91b2c3dca4ab.png"  width="500" height="400"/>
 
-![상세정보](https://user-images.githubusercontent.com/71584114/272788619-ff2863d2-a6af-47ae-a010-91b2c3dca4ab.png)
+
 
 ## 기술
 
