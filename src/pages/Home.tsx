@@ -17,7 +17,7 @@ export default function Home() {
   const Row = ({ index, style }: any) => {
     return (
       <>
-        {pokeList.length > 0 ? (
+        {!isLoading && (
           <div
             style={{
               ...style,
@@ -42,9 +42,8 @@ export default function Home() {
               </div>
             ))}
           </div>
-        ) : (
-          <SkeletonUiList index={index} style={style} />
         )}
+        {isLoading && <SkeletonUiList index={index} style={style} />}
       </>
     );
   };
