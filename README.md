@@ -13,24 +13,25 @@
 - 프론트엔드 1분(본인)
 - 프로젝트 전체 작업 기여도 : 100%
 
-#### 구현 이미지
-<img src="https://github.com/gn753/poke/assets/71584114/ebc18e1a-edab-4820-b37d-f26413a93447"  width="500" height="400"/>
+
+### 기술적 도전 목표
+
+- 무한 스크롤 페이지의 성능 저하로 인한 가상 리스트를 통한 무한 스크롤 최적화
+- 가상 리스트 적용 시 브라우저 전체 스크롤과 리스트 스크롤이 분리 돼 UX가 떨어지던 점을 고려 해 두 스크롤 동기화.
 
 
-### Pokemon 타입별 출력.
-<img src="https://user-images.githubusercontent.com/71584114/272788279-037f9a42-b53f-4595-b79a-eba05936eade.png"  width="500" height="200"/>
+### 프로젝트 성능 비교안
 
-## 포켓몬 상세정보
-<img src="https://user-images.githubusercontent.com/71584114/272788619-ff2863d2-a6af-47ae-a010-91b2c3dca4ab.png"  width="500" height="400"/>
+#### 개선 전
+<img src="https://github.com/gn753/poke/assets/71584114/2243211c-9ecc-4406-8a26-064ef5649893" width="500" height="400" />
+
+#### 개선 후 
+<img src="https://github.com/gn753/poke/assets/71584114/3b6d2796-f33e-49cf-be33-d6fa684714ed" width="500" height="400" />
 
 
 
 ## 기술
-
-- React
-- Typescript
-- TailwindCss
-- Recoil
+React,Typescript,tailwind-css
 
 ## 커밋 규칙
 
