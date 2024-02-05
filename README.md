@@ -20,6 +20,9 @@
 - 가상 리스트 적용 시 브라우저 전체 스크롤과 리스트 스크롤이 분리 돼 UX가 떨어지던 점을 고려 해 두 스크롤 동기화.
 
 
+### 프로젝트 아키텍쳐 
+<img src="https://github.com/gn753/poke/assets/71584114/95e9fd80-cf95-4e79-b0be-5d7736b9e8cd">
+
 ### 프로젝트 성능 비교안
 
 #### 개선 전
@@ -27,6 +30,7 @@
 
 #### 개선 후 
 <img src="https://github.com/gn753/poke/assets/71584114/3b6d2796-f33e-49cf-be33-d6fa684714ed" width="500" height="400" />
+
 
 
 
