@@ -4,11 +4,12 @@ import useReactWindowScroll from "../hooks/useReactWindowScroll";
 import { FixedSizeList as List } from "react-window";
 import SkeletonUiList from "../components/SkeletonUiList";
 import InfiniteLoader from "react-window-infinite-loader";
+import { Box } from "@mui/material";
 
 // const itemCount = 1000 / 5; // 아이템 개수
 const itemsPerRow = 5; // 한 행당 아이템 개수
 const itemWidth = "20%"; // 아이템 가로 너비
-const itemHeight = 180; // 아이템 세로 높이
+const itemHeight = 200; // 아이템 세로 높이
 
 export default function Home() {
   const { pokeList, count, isLoading, getPokes } = useFetctPokeList();
@@ -18,19 +19,19 @@ export default function Home() {
     return (
       <>
         {!isLoading && (
-          <div
-            style={{
+          <Box
+            sx={{
               ...style,
               display: "flex",
               gap: "10px",
               height: itemHeight,
+              paddingBottom: "20px",
             }}
           >
             {Array.from({ length: itemsPerRow }, (_, i) => (
-              <div
+              <Box
                 key={index * itemsPerRow + i}
-                style={{ width: itemWidth }}
-                className="h-full"
+                sx={{ width: itemWidth, height: "100%" }}
               >
                 {pokeList[index * itemsPerRow + i] && (
                   <PokeCard
@@ -39,9 +40,9 @@ export default function Home() {
                     image={pokeList[index * itemsPerRow + i].image}
                   />
                 )}
-              </div>
+              </Box>
             ))}
-          </div>
+          </Box>
         )}
         {isLoading && <SkeletonUiList index={index} style={style} />}
       </>
@@ -56,7 +57,7 @@ export default function Home() {
   const isItemLoaded = (index: any) =>
     !hasNextPage || index < pokeList.length / 5;
   return (
-    <main className="max-w-screen-md mx-auto">
+    <Box>
       <InfiniteLoader
         isItemLoaded={isItemLoaded}
         itemCount={itemCount}
@@ -83,6 +84,6 @@ export default function Home() {
           </List>
         )}
       </InfiniteLoader>
-    </main>
+    </Box>
   );
 }

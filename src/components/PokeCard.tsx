@@ -1,3 +1,4 @@
+import { styled, Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 interface IsPokeCard {
@@ -8,19 +9,32 @@ interface IsPokeCard {
 
 export default function PokeCard({ name, image, id }: IsPokeCard) {
   return (
-    <div className="box-border p-5 w-full h-full border transition-[0.5s] rounded-[10px] border-solid border-[#e8e8e8] cursor-pointer">
+    <ViteItem>
       <Link to={`/details/${id}`}>
-        <figure className="text-center">
-          <img
-            className="inline-block max-w-full h-auto"
-            src={image}
-            alt=""
-            loading="lazy"
-          />
-        </figure>
-        <p>No. {String(id).padStart(4, "0")}</p>
-        <p className="text-lg font-bold">{name}</p>
+        <Box sx={{ textAlign: "center" }} component="figure">
+          <Image src={image} alt="" loading="lazy" />
+        </Box>
+        <Typography component="p">No. {String(id).padStart(4, "0")}</Typography>
+        <Typography component="p">{name}</Typography>
       </Link>
-    </div>
+    </ViteItem>
   );
 }
+const ViteItem = styled(Box)`
+  /* 박스 스타일 */
+  box-sizing: border-box;
+  padding: 1.25rem;
+  width: 100%;
+  height: 100%;
+  /* 테두리 스타일 */
+  border: 1px solid #e8e8e8;
+  transition: border 0.5s ease-in-out;
+  border-radius: 10px;
+
+  /* 커서 스타일 */
+  cursor: pointer;
+`;
+const Image = styled("img")({
+  display: "inline-block",
+  maxWidth: "100%",
+});

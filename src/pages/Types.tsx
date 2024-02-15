@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PokeCard from "../components/PokeCard";
@@ -62,24 +63,24 @@ export default function Types() {
   }, [id]);
 
   return (
-    <main className="p-10">
+    <main>
       <div>
-        <div className="display: flex flex-wrap">
+        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {pokes &&
             pokes.map(
               (poke: any) =>
                 poke.id < 10000 && (
-                  <div className="w-1/5">
+                  <Box sx={{ width: "20%" }}>
                     <PokeCard
                       key={poke.name}
                       id={poke.id}
                       image={poke.image}
                       name={poke.name}
                     />
-                  </div>
+                  </Box>
                 )
             )}
-        </div>
+        </Box>
         <div>{isLoading && "로딩중입니다"}</div>
       </div>
     </main>

@@ -1,123 +1,73 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-
-interface IsDetails {
-  name: string;
-  text: string;
-  color: string;
-  type: string;
-  image: string;
-  height: string;
-  weight: string;
-  abilities: string;
-  genderRatio: number;
-  classification: string;
-}
+import { Box, styled, Typography } from "@mui/material";
+import useFetchPokemonDetails from "../hooks/useFetchPokemonDetails";
 
 export default function Details() {
-  // 포켓몬 상세 데이터 : 종,타입,이미지, 칼라
-  const [pokeDetails, setPokeDetails] = useState<IsDetails | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const id = Number(params.id);
-
-  useEffect(() => {
-    //만약 데이터값에 상태가 없다면 호출
-    const fetchPokeDetails = async () => {
-      setIsLoading(true);
-      //id 값으로 포켓몬 상세 데이터 출력
-      const pokeDetailRes = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${id}`
-      );
-      const pokeDeatailslData = await pokeDetailRes.json();
-      const pokeSpeciesUrl = pokeDeatailslData.species.url;
-      //상세 데이터에서 나온 종 url로 이미지,한글 이름 찾기
-      const speciesRes = await fetch(pokeSpeciesUrl);
-      const speciesData = await speciesRes.json();
-
-      const name = speciesData.names[2].name;
-      const text = speciesData.flavor_text_entries[23].flavor_text;
-      const color = speciesData.color.name;
-      const type = pokeDeatailslData.types[0].type.name;
-      const height = pokeDeatailslData.height;
-      const weight = pokeDeatailslData.weight;
-      const abilities = pokeDeatailslData.abilities.map(
-        (ability: any) => ability.ability.name
-      );
-      const genderRatio = speciesData.gender_rate;
-      const classification = speciesData.genera.find(
-        (genus: any) => genus.language.name === "ko"
-      ).genus;
-
-      const pokeDetailsData = {
-        name,
-        text,
-        color,
-        type,
-        height,
-        weight,
-        abilities,
-        genderRatio,
-        classification,
-        image:
-          pokeDeatailslData.sprites.other["official-artwork"].front_default,
-      };
-      console.log(pokeDetailsData, "data");
-      setPokeDetails(pokeDetailsData);
-      setIsLoading(false);
-    };
-    if (id) {
-      fetchPokeDetails();
-    }
-  }, [id]);
-
+  const pokeDetails = useFetchPokemonDetails(id);
   return (
-    <main className="max-w-screen-md mx-auto">
-      {/* 테일윈드 css는 다이나믹 값을 지원하지 않으므로 inline-style 사용 */}
-      <div>{isLoading && "로딩중입니다"}</div>
-      <div>
+    <Wrapper>
+      <Box sx={{ display: "flex", justifyContent: "center", padding: "10px" }}>
+        <Box sx={{ background: `${pokeDetails && pokeDetails.color}` }}>
+          {pokeDetails && (
+            <img src={`${pokeDetails.image}`} alt="포켓몬 상세 이미지" />
+          )}
+        </Box>
         <div>
-          <div className="flex justify-center p-10 gap-4 border border-solid">
-            <div style={{ background: `${pokeDetails && pokeDetails.color}` }}>
-              {pokeDetails && (
-                <img src={`${pokeDetails.image}`} alt="포켓몬 상세 이미지" />
-              )}
-            </div>
-            <div>
-              <h4 className="text-[50px]">
-                <div>No. {String(id).padStart(4, "0")}</div>
-                <div>{pokeDetails && pokeDetails.name}</div>
-              </h4>
-              <p className="text-lg mb-5 mt-5">
-                {pokeDetails && pokeDetails.text}
-              </p>
-              <div className="border pt-2 pb-5 px-[30px] rounded-[7px] border-solid border-[#e8e8e8] ">
-                <div className="flex flex-wrap">
-                  <div className="w-[33.3%] p-3">
-                    타입 : {pokeDetails && pokeDetails.type}
-                  </div>
-                  <div className="w-[33.3%] p-3">
-                    키 : {pokeDetails && pokeDetails.height}m
-                  </div>
-                  <div className="w-[33.3%] p-3">
-                    분류 : {pokeDetails && pokeDetails.classification}
-                  </div>
-                  <div className="w-[33.3%] p-3">
-                    성별 :
-                    {pokeDetails && pokeDetails.genderRatio === 1 ? "남" : "여"}
-                  </div>
-                  <div className="w-[33.3%] p-3">
-                    몸무게 : {pokeDetails && pokeDetails.weight}kg
-                  </div>
-                  <div className="w-[33.3%] p-3">
-                    특성 : {pokeDetails && pokeDetails.abilities}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Typography variant="h3">
+            <div>No. {String(id).padStart(4, "0")}</div>
+            <div>{pokeDetails && pokeDetails.name}</div>
+          </Typography>
+          <Typography variant="body2">
+            {pokeDetails && pokeDetails.text}
+          </Typography>
+          <PokeDetailsCardWrapper>
+            <PokeDetailsCardContainer>
+              <PokeDetailsCardInfo>
+                타입 : {pokeDetails && pokeDetails.type}
+              </PokeDetailsCardInfo>
+              <PokeDetailsCardInfo>
+                키 : {pokeDetails && pokeDetails.height}m
+              </PokeDetailsCardInfo>
+              <PokeDetailsCardInfo>
+                분류 : {pokeDetails && pokeDetails.classification}
+              </PokeDetailsCardInfo>
+              <PokeDetailsCardInfo>
+                성별 :
+                {pokeDetails && pokeDetails.genderRatio === 1 ? "남" : "여"}
+              </PokeDetailsCardInfo>
+              <PokeDetailsCardInfo>
+                몸무게 : {pokeDetails && pokeDetails.weight}kg
+              </PokeDetailsCardInfo>
+              <PokeDetailsCardInfo>
+                특성 : {pokeDetails && pokeDetails.abilities}
+              </PokeDetailsCardInfo>
+            </PokeDetailsCardContainer>
+          </PokeDetailsCardWrapper>
         </div>
-      </div>
-    </main>
+      </Box>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled(Box)({
+  width: "768px",
+  margin: "auto",
+});
+
+const PokeDetailsCardWrapper = styled(Box)`
+  /* 테두리 스타일 */
+  border: 1px solid #e8e8e8;
+  border-radius: 7px;
+  padding: 0.5rem 1.25rem;
+`;
+const PokeDetailsCardContainer = styled(Box)({
+  display: "flex",
+  flexWrap: "wrap",
+});
+const PokeDetailsCardInfo = styled(Typography)({
+  display: "block",
+  padding: "3px",
+  width: "33.3333%%",
+});

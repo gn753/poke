@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -53,24 +54,29 @@ export default function PokeTypes() {
 
   return (
     <div>
-      <div className="max-w-screen-md mx-auto">
-        <div className="flex flex-wrap gap-[5px] mt-3 mb-3">
+      <Box sx={{ width: "768px", margin: "20px auto" }}>
+        <Box sx={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
           {types.length > 0 &&
             types.map(
               (type) =>
                 colors[type.name] && (
                   <Link key={type.name} to={`/types/${type.urlParmas}`}>
-                    <div
-                      className={`w-[100px] rounded text-center cursor-pointer text-white`}
-                      style={{ backgroundColor: `${colors[type.name]}` }}
+                    <Box
+                      sx={{
+                        width: "100px",
+                        textAlign: "center",
+                        cursor: "pointer",
+                        color: "#fff",
+                        backgroundColor: `${colors[type.name]}`,
+                      }}
                     >
                       {type.name}
-                    </div>
+                    </Box>
                   </Link>
                 )
             )}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </div>
   );
 }

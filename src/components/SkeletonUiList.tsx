@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import SkeletonUi from "./SkeletonUi";
 
 interface SkeletonUiListProps {
@@ -17,16 +18,16 @@ export default function SkeletonUiList({ index, style }: SkeletonUiListProps) {
           display: "flex",
           gap: "10px",
           height: itemHeight,
+          paddingBottom: "20px",
         }}
       >
         {Array.from({ length: itemsPerRow }, (_, i) => (
-          <div
+          <Box
             key={index * itemsPerRow + i}
-            style={{ width: itemWidth }}
-            className="h-full"
+            sx={{ width: itemWidth, height: "100%" }}
           >
             <SkeletonUi />
-          </div>
+          </Box>
         ))}
       </div>
     </>

@@ -1,10 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import PokeTopBar from "./components/PokeTopBar";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
 import Types from "./pages/Types";
-import { RecoilRoot } from "recoil";
+
 import Layout from "./components/Layout";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,9 @@ const router = createBrowserRouter([
     path: "/details/:id",
     element: (
       <>
-        <PokeTopBar />
-        <Details />
+        <Layout>
+          <Details />
+        </Layout>
       </>
     ),
   },
@@ -38,9 +40,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RecoilRoot>
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </RecoilRoot>
+    </Provider>
   );
 }
 

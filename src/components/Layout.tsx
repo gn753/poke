@@ -1,12 +1,13 @@
-import PokeTopBar from "./PokeTopBar";
+import { Box } from "@mui/system";
+import Header from "./Header";
 import PokeTypes from "./PokeTypes";
 
 export default function Layout({ children }: any) {
   return (
     <>
-      <PokeTopBar />
+      <Header />
       <PokeTypes />
-      {children}
+      <Box sx={{ margin: "50px auto", width: "768px" }}>{children}</Box>
     </>
   );
 }
