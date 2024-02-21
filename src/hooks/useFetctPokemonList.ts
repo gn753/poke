@@ -2,7 +2,6 @@ import { useAppSelector, useAppDispatch } from "../store/store";
 import fetchkoreanNames from "../api/fetchKoreanNames";
 import fetchPokemonList from "../api/fetchPokemonList";
 import { setPokeList, setIsLoading, setCount } from "../store/pokemonListSlice";
-import fetchPokemonDetails from "../api/fetchPokemonDetails";
 
 const useFetctPokemonList = () => {
   const pokeList = useAppSelector((state) => state.pokeList.data);
@@ -14,7 +13,6 @@ const useFetctPokemonList = () => {
     dispatch(setIsLoading(true));
     const englishPokes = await fetchPokemonList(count, 100);
     const koreanNames = await fetchkoreanNames(englishPokes);
-   
 
     dispatch(setPokeList(koreanNames));
     dispatch(setCount(count + 100));
@@ -24,4 +22,4 @@ const useFetctPokemonList = () => {
   return { isLoading, pokeList, count, getPokes };
 };
 
-export default useFetctPokemonList
+export default useFetctPokemonList;
