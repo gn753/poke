@@ -1,8 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import Details from "./pages/Details";
-import Types from "./pages/Types";
-
 import Layout from "./components/Layout";
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -22,16 +20,6 @@ const router = createBrowserRouter([
       <>
         <Layout>
           <Details />
-        </Layout>
-      </>
-    ),
-  },
-  {
-    path: "/types/:urlParams",
-    element: (
-      <>
-        <Layout>
-          <Types />
         </Layout>
       </>
     ),

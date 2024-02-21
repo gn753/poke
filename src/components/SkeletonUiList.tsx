@@ -5,9 +5,9 @@ interface SkeletonUiListProps {
   index: number;
   style: any;
 }
-const itemsPerRow = 5; // 한 행당 아이템 개수
-const itemWidth = "20%"; // 아이템 가로 너비
-const itemHeight = 180; // 아이템 세로 높이
+const itemsPerRow = 4; // 한 행당 아이템 개수
+const itemWidth = "25%"; // 아이템 가로 너비
+const itemHeight = 200; // 아이템 세로 높이
 
 export default function SkeletonUiList({ index, style }: SkeletonUiListProps) {
   return (

@@ -3,7 +3,6 @@ const fetchPokemonList = async (count: number, limit: number = 100) => {
   const response = await fetch(baseUrl);
 
   const data = await response.json();
-  console.log(data, "respnosde");
   return data;
 };
 export default fetchPokemonList;

@@ -1,32 +1,78 @@
 import { useParams } from "react-router-dom";
 import { Box, styled, Typography } from "@mui/material";
 import useFetchPokemonDetails from "../hooks/useFetchPokemonDetails";
+import ucFirst from "../utils/ucFirst";
+import colors from "../data/colors";
+
+function ChartBar({ title, width }: any) {
+  return (
+    <Box sx={{ marginBottom: "3px" }}>
+      <Typography variant="body2" component="p">
+        {title}
+      </Typography>
+      <Box
+        sx={{
+          backgroundColor: "#98c1b0",
+          width: "100px",
+          height: "20px",
+          boxSizing: "border-box",
+        }}
+      >
+        <Box
+          sx={{
+            width: `${width}%`,
+            height: "20px",
+            background: "red",
+          }}
+        ></Box>
+      </Box>
+    </Box>
+  );
+}
 
 export default function Details() {
   const params = useParams();
   const id = Number(params.id);
   const pokeDetails = useFetchPokemonDetails(id);
+
   return (
     <Wrapper>
-      <Box sx={{ display: "flex", justifyContent: "center", padding: "10px" }}>
-        <Box sx={{ background: `${pokeDetails && pokeDetails.color}` }}>
-          {pokeDetails && (
-            <img src={`${pokeDetails.image}`} alt="포켓몬 상세 이미지" />
-          )}
+      <Box sx={{ display: "flex", gap: "10px" }}>
+        <Typography variant="h5">
+          <div>No. {String(id).padStart(4, "0")}</div>
+          <div>{pokeDetails && pokeDetails.name}</div>
+        </Typography>
+        <Box>
+          <Box
+            sx={{
+              background: colors[`${pokeDetails?.types[0].type.name}`],
+              display: "inline",
+              padding: "10px",
+              height: "auto",
+              color: "#fff",
+              borderRadius: "5px",
+            }}
+          >
+            {ucFirst(pokeDetails && pokeDetails?.types[0].type.name)}
+          </Box>
         </Box>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center", padding: "10px" }}>
         <div>
-          <Typography variant="h3">
-            <div>No. {String(id).padStart(4, "0")}</div>
-            <div>{pokeDetails && pokeDetails.name}</div>
-          </Typography>
+          <ChartBar title="HP" width={pokeDetails?.stats[0].base_stat} />
+          <ChartBar title="Attack" width={pokeDetails?.stats[1].base_stat} />
+          <ChartBar title="Defense" width={pokeDetails?.stats[2].base_stat} />
+          <ChartBar
+            title="Special-defense"
+            width={pokeDetails?.stats[3].base_stat}
+          />
+          <ChartBar title="Speed" width={pokeDetails?.stats[4].base_stat} />
+
           <Typography variant="body2">
             {pokeDetails && pokeDetails.text}
           </Typography>
           <PokeDetailsCardWrapper>
             <PokeDetailsCardContainer>
-              <PokeDetailsCardInfo>
-                타입 : {pokeDetails && pokeDetails.type}
-              </PokeDetailsCardInfo>
               <PokeDetailsCardInfo>
                 키 : {pokeDetails && pokeDetails.height}m
               </PokeDetailsCardInfo>
@@ -46,6 +92,11 @@ export default function Details() {
             </PokeDetailsCardContainer>
           </PokeDetailsCardWrapper>
         </div>
+        <Box>
+          {pokeDetails && (
+            <img src={`${pokeDetails.image}`} alt="포켓몬 상세 이미지" />
+          )}
+        </Box>
       </Box>
     </Wrapper>
   );
