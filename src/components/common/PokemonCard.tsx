@@ -1,15 +1,8 @@
 import { styled, Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import colors from "../../data/colors";
+import { IfPokemonCardItem } from "../../types";
 import ucFirst from "../../utils/ucFirst";
-
-interface IsPokeCard {
-  name: string;
-  image: string;
-  id: number;
-  color: string;
-  types: any;
-}
 
 export default function PokemonCard({
   name,
@@ -17,7 +10,7 @@ export default function PokemonCard({
   id,
   color,
   types,
-}: IsPokeCard) {
+}: IfPokemonCardItem) {
   return (
     <ViteItem
       sx={{

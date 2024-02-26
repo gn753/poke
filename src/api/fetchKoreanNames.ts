@@ -1,17 +1,7 @@
+import { IfPokemonList } from "../types";
 import fetchPokemonDetails from "./fetchPokemonDetails";
 
-export interface IsFetchPoke {
-  next: any;
-  results: any;
-}
-
-export interface IsPoke {
-  name: string;
-  id: string;
-  image: string;
-  color: string;
-}
-const fetchkoreanNames = async (data: IsFetchPoke) => {
+const fetchkoreanNames = async (data: IfPokemonList) => {
   // url에서 id 값 추출
   const urlParts = data.results.map((part: any) => {
     const urlSplit = part.url.split("/");
@@ -32,7 +22,7 @@ const fetchkoreanNames = async (data: IsFetchPoke) => {
   const allPokemonDatas = await Promise.all(pokemonDatas).then((res) => res);
 
   //대량의 요청은 Promise.all로 병렬 처리
-  const responses: IsPoke[] = await Promise.all(urls).then((res) =>
+  const responses = await Promise.all(urls).then((res) =>
     res.map((it: any, index: number) => {
       return {
         name: it.names[2].name,

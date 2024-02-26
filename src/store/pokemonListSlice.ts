@@ -1,7 +1,8 @@
 // pokeListSlice.js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IfPokemonCardItem } from "../types";
 interface RootState {
-  data: any[];
+  data: IfPokemonCardItem[];
   isLoading: boolean;
   count: number;
 }
@@ -16,7 +17,7 @@ const pokemonListSlice = createSlice({
   name: "pokeList",
   initialState,
   reducers: {
-    setPokeList: (state, action) => {
+    setPokeList: (state, action: PayloadAction<IfPokemonCardItem[]>) => {
       state.data.push(...action.payload);
     },
     setIsLoading: (state, action) => {

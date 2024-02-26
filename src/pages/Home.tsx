@@ -22,7 +22,6 @@ export default function Home() {
   const isItemLoaded = (index: any) =>
     !hasNextPage || index < pokeList.length / 5;
 
-  console.log(pokeList, "pokeList");
   return (
     <Box>
       <InfiniteLoader

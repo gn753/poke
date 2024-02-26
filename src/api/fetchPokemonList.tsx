@@ -1,4 +1,9 @@
-const fetchPokemonList = async (count: number, limit: number = 100) => {
+import { IfPokemonList } from "../types";
+
+const fetchPokemonList: (
+  count: number,
+  limit: number
+) => Promise<IfPokemonList> = async (count: number, limit: number = 100) => {
   const baseUrl = `https://pokeapi.co/api/v2/pokemon?offset=${count}&limit=${limit}`;
   const response = await fetch(baseUrl);
 
