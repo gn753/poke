@@ -1,4 +1,3 @@
-import { throttle } from "lodash";
 import { useEffect, useRef } from "react";
 import { FixedSizeList } from "react-window";
 
