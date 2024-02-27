@@ -8,7 +8,7 @@ export default function useReactWindowScroll() {
   const ref = useRef<FixedSizeList | null>(null);
 
   useEffect(() => {
-    const handleWindowScroll = throttle(() => {
+    const handleWindowScroll = () => {
       const { offsetTop = 0 } = outerRef.current || { offsetTop: 0 };
       const scrollMin = 0;
       let windowScrollY = window.scrollY;
@@ -33,7 +33,7 @@ export default function useReactWindowScroll() {
 
         ref.current.scrollTo(scrollOffset);
       }
-    }, 40);
+    };
 
     handleWindowScroll();
     window.addEventListener("scroll", handleWindowScroll);
